@@ -15,15 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $conn = getDbConnection();
 
-        $stmt = $conn->prepare('SELECT id, password FROM admins WHERE username = :username');
+        $stmt = $conn->prepare('SELECT id, password, access FROM admins WHERE username = :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($admin && password_verify($password, $admin['password'])) {
-            $_SESSION['admin_id'] = $admin['id'];
-            echo "success";
+            if ($admin['access']) {
+                $_SESSION['admin_id'] = $admin['id'];
+                echo "success";
+            } else {
+                echo "Your account is not active.";
+            }
         } else {
             echo "Invalid username or password.";
         }
