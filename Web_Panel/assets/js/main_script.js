@@ -106,3 +106,20 @@ buttons.forEach(button => {
 
 document.addEventListener('DOMContentLoaded', handlePageLoad);
 window.addEventListener('popstate', handlePageLoad);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const blockedEntries = document.querySelectorAll('.blocked-entry');
+
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.toLowerCase();
+        blockedEntries.forEach(entry => {
+            const title = entry.querySelector('.entry-title').textContent.toLowerCase();
+            if (title.includes(query)) {
+                entry.style.display = '';
+            } else {
+                entry.style.display = 'none';
+            }
+        });
+    });
+});
