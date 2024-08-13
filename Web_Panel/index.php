@@ -65,7 +65,9 @@ if (!isset($_SESSION['admin_id'])) {
         </div>
 
         <div class="main-container">
+
             <section class="home_section section"></section>
+
             <section class="block_list_section section">
                 <div class="block_list_container">
                     <div class="header_content">
@@ -95,17 +97,40 @@ if (!isset($_SESSION['admin_id'])) {
                                         <?php echo htmlspecialchars($entry['title']); ?>
                                     </div>
                                 </div>
-                                <div class="be-options-content"></div>
+                                <div class="be-options-content">
+                                    <div class="label">Description:</div>
+                                    <div class="description">
+                                        <?php echo htmlspecialchars($entry['description']); ?>
+                                    </div>
+                                    <div class="label">Address:</div>
+                                    <div class="address">
+                                        <?php echo htmlspecialchars($entry['address']); ?>
+                                    </div>
+                                    <div class="label">Options:</div>
+                                    <div class="option-entry-box">
+                                        <button class="be-button" id="btn_edit" data-entry="<?php echo htmlspecialchars($entry['id']); ?>">
+                                            <i class="icon-edit"></i>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button class="be-button" id="btn_delete" data-entry="<?php echo htmlspecialchars($entry['id']); ?>">
+                                            <i class="icon-delete"></i>
+                                            <span>Edit</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
             </section>
+
             <section class="setting-section section"></section>
+
         </div>
     </div>
 </div>
 
 <script src="assets/js/main_script.js"></script>
+<script src="assets/js/entry_handler.js"></script>
 </body>
 </html>
