@@ -19,9 +19,9 @@ try {
         $role = $admin['role'];
 
         if ($role === 'superadmin') {
-            $stmt = $pdo->prepare("SELECT * FROM blocked_entries");
+            $stmt = $pdo->prepare("SELECT * FROM blocked_entries ORDER BY created_at DESC");
         } else {
-            $stmt = $pdo->prepare("SELECT * FROM blocked_entries WHERE created_by = :admin_id");
+            $stmt = $pdo->prepare("SELECT * FROM blocked_entries WHERE created_by = :admin_id ORDER BY created_at DESC");
             $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
         }
 
