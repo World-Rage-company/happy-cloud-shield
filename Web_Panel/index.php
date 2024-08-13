@@ -130,6 +130,79 @@ if (!isset($_SESSION['admin_id'])) {
     </div>
 </div>
 
+<div class="block-entry-background">
+    <div class="new-entry-layout">
+        <div class="nb-header-content">
+            <div class="title-nbh">
+                <span>New Block</span>
+            </div>
+            <div class="options-nbh">
+                <button class="button-back-nb" id="btn_n_close">
+                    <span>Back</span>
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-content">
+            <div class="form-label">Enter Website URL <span class="required">*</span></div>
+            <div class="form-input">
+                <input type="url" class="input-field" id="address-input" placeholder="e.g.: https://example.com">
+            </div>
+            <div class="form-label">Enter Title <span class="required">*</span></div>
+            <div class="form-input">
+                <input type="text" class="input-field" id="title-input" placeholder="Title">
+            </div>
+            <div class="form-label">Enter Description</div>
+            <div class="form-input">
+                <input type="text" class="input-field" id="description-input" placeholder="Description">
+            </div>
+        </div>
+        <div class="options-content">
+            <button class="button-nboc" id="btn_n_cancel">
+                <span>Cancel</span>
+            </button>
+            <button class="button-nboc" id="btn_n_save">
+                <span>Save</span>
+            </button>
+        </div>
+    </div>
+    <div class="edit-entry-layout">
+        <div class="nb-header-content">
+            <div class="title-nbh">
+                <span>Edit Block</span>
+            </div>
+            <div class="options-nbh">
+                <button class="button-back-nb" id="btn_e_close">
+                    <span>Back</span>
+                    <i class="icon-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-content">
+            <div class="form-label">Enter Website URL <span class="required">*</span></div>
+            <div class="form-input">
+                <input type="url" class="input-field" id="edit-address-input" placeholder="e.g.: https://example.com">
+            </div>
+            <div class="form-label">Enter Title <span class="required">*</span></div>
+            <div class="form-input">
+                <input type="text" class="input-field" id="edit-title-input" placeholder="Title">
+            </div>
+            <div class="form-label">Enter Description</div>
+            <div class="form-input">
+                <input type="text" class="input-field" id="edit-description-input" placeholder="Description">
+            </div>
+        </div>
+        <div class="options-content">
+            <button class="button-nboc" id="btn_e_cancel">
+                <span>Cancel</span>
+            </button>
+            <button class="button-nboc" id="btn_e_save">
+                <span>Save</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <script src="assets/js/main_script.js"></script>
 <script src="assets/js/entry_handler.js"></script>
 </body>
