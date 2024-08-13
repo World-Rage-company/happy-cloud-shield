@@ -66,7 +66,41 @@ if (!isset($_SESSION['admin_id'])) {
 
         <div class="main-container">
             <section class="home_section section"></section>
-            <section class="block_list_section section"></section>
+            <section class="block_list_section section">
+                <div class="block_list_container">
+                    <div class="header_content">
+                        <div class="header_options_one">
+                            <div class="page-name">
+                                <span>Block List</span>
+                            </div>
+                            <div class="page-options">
+                                <button class="osb_button" id="add_btn">
+                                    <i class="icon-add"></i>
+                                    <span>Add</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="header_options_two">
+                            <input class="osb_search" placeholder="Search...">
+                        </div>
+                    </div>
+                    <div class="main_content">
+                        <?php foreach ($blocked_entries as $entry): ?>
+                            <div class="blocked-entry">
+                                <div class="be-header-content">
+                                    <div class="entry-profile">
+                                        <?php echo strtoupper(substr($entry['title'], 0, 1)); ?>
+                                    </div>
+                                    <div class="entry-title">
+                                        <?php echo htmlspecialchars($entry['title']); ?>
+                                    </div>
+                                </div>
+                                <div class="be-options-content"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </section>
             <section class="setting-section section"></section>
         </div>
     </div>
