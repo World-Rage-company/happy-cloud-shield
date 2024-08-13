@@ -81,7 +81,7 @@ if (!isset($_SESSION['admin_id'])) {
                             </div>
                         </div>
                         <div class="header_options_two">
-                            <input class="osb_search" placeholder="Search...">
+                            <input class="osb_search" id="search-input" placeholder="Search...">
                         </div>
                     </div>
                     <div class="main_content">
