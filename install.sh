@@ -8,7 +8,8 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 check_os() {
-    if [[ $(lsb_release -d | grep -oP '(?<=Description:\s).+') != "Ubuntu 20.04 LTS" && $(lsb_release -d | grep -oP '(?<=Description:\s).+') != "Ubuntu 22.04 LTS" ]]; then
+    os_version=$(lsb_release -r | awk '{print $2}')
+    if [[ "$os_version" < "20.04" ]]; then
         echo -e "${RED}This script is designed to run on Ubuntu 20.04 or newer.${NC}"
         exit 1
     fi
