@@ -265,6 +265,220 @@ body {
     display: flex;
 }
 
+.home_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 772px;
+    height: 100%;
+}
+
+.home-message-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% - 20px);
+    height: 145px;
+    background: var(--widget-color);
+    border-radius: 16px;
+    margin: 10px 10px;
+}
+
+.header_content_hmc {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.header_content_hmc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+.profile_logo {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 60px;
+    height: 60px;
+    background: var(--widget-color);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.profile_logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    user-select: none;
+    pointer-events: none;
+}
+
+.up-details {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 70px;
+    color: #fff;
+}
+
+.up-details span {
+    font-size: 14px;
+}
+
+.up-content {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.up-message-more-details {
+    color: var(--text-color);
+    font-size: 16px;
+    margin: 0;
+    text-decoration: none;
+    user-select: none;
+}
+
+.up-message-more-details:hover {
+    text-decoration: underline;
+}
+
+.welcome_box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100% - 20px);
+    height: auto;
+    background: var(--widget-color);
+    border-radius: 16px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+
+.content_wel_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    user-select: none;
+}
+
+.profile_wel {
+    width: 50px;
+    height: 50px;
+    background: var(--hover-widget-color);
+    padding: 5px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_wel img {
+    width: 40px;
+    height: 40px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.content_wel_box p {
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+    margin-left: 10px;
+}
+
+.home_container .header_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.header_options_one_hh {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.header_options_one_hh .page-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header_options_one_hh .page-name span {
+    color: var(--text-color);
+}
+
+.home-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.options_box_hd {
+    /*display: flex;*/
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    height: 100px;
+    background: var(--widget-color);
+    border-radius: 16px;
+}
+
+.header_box {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+}
+
+.profile_box {
+    width: 50px;
+    height: 50px;
+    background: var(--hover-widget-color);
+    border-radius: 16px;
+}
+
 .block_list_container {
     display: flex;
     flex-direction: column;
@@ -781,7 +995,6 @@ body {
     justify-content: flex-end;
     margin-top: auto;
     padding: 10px;
-    border-top: 1px solid var(--border-color);
     gap: 10px;
 }
 
