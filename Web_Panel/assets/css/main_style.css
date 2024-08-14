@@ -712,3 +712,117 @@ body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
 }
+
+.setting-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 772px;
+    height: 100%;
+}
+
+.setting-content .header_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.setting-content .header_content .page-name {
+    font-size: 18px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.setting-content .main_content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.setting-content .main_content .setting_options_box {
+    width: 100%;
+    height: auto;
+    background: var(--widget-color);
+    border-radius: 16px;
+    margin: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.setting-content .main_content .setting_options_box .option_header {
+    width: 100%;
+    padding: 10px;
+}
+
+.setting-content .main_content .setting_options_box .option_header span {
+    color: var(--text-color);
+    font-size: 18px;
+    user-select: none;
+}
+
+.setting-content .main_content .setting_options_box .option_content {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.options_bottom_content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    gap: 10px;
+}
+
+.input-field-setting-up {
+    border: 2px solid transparent;
+    width: calc(100% - 10px);
+    height: 35px;
+    padding-left: 10px;
+    outline: none;
+    background-color: #010104;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    margin: 5px 5px;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.input-field-setting-up:focus {
+    border: 2px solid #4a9dec;
+    box-shadow: 0px 0px 0px 6px rgba(74, 157, 236, 0.2);
+    background-color: #010104;
+}
+
+.button_apply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px;
+    border: none;
+    background: var(--widget-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--tran-01);
+    border-radius: 10px;
+}
+
+.button_apply:hover {
+    background-color: var(--hover-widget-color);
+}
+
+.button_apply span {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+}
