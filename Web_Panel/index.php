@@ -83,7 +83,7 @@ if (!isset($_SESSION['admin_id'])) {
                             </div>
                         </div>
                         <div class="header_options_two">
-                            <input class="osb_search" id="search-input" placeholder="Search...">
+                            <input type="search" class="osb_search" id="search-input" placeholder="Search...">
                         </div>
                     </div>
                     <div class="main_content">
@@ -124,7 +124,39 @@ if (!isset($_SESSION['admin_id'])) {
                 </div>
             </section>
 
-            <section class="setting-section section"></section>
+            <section class="setting-section section">
+                <div class="setting-content">
+                    <div class="header_content">
+                        <div class="page-name">
+                            <span>Setting</span>
+                        </div>
+                    </div>
+                    <div class="main_content">
+                        <div class="setting_options_box">
+                            <div class="option_header">
+                                <div class="options_name">
+                                    <span>Change of username and password</span>
+                                </div>
+                            </div>
+                            <div class="option_content">
+                                <div class="form-label">Current Password <span class="required">*</span></div>
+                                <input type="password" class="input-field-setting-up" id="current-password-input" placeholder="Current Password">
+                                <div class="form-label">New Username <span class="required">*</span></div>
+                                <input type="text" class="input-field-setting-up" id="new-username-input" placeholder="New Username">
+                                <div class="form-label">New Password <span class="required">*</span></div>
+                                <input type="password" class="input-field-setting-up" id="new-password-input" placeholder="New Password">
+                                <div class="form-label">Confirm New Password <span class="required">*</span></div>
+                                <input type="password" class="input-field-setting-up" id="confirm-new-password-input" placeholder="Confirm New Password">
+                            </div>
+                            <div class="options_bottom_content">
+                                <button class="button_apply" id="ss_btn_change_u_p">
+                                    <span>Apply</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
         </div>
     </div>
@@ -205,5 +237,6 @@ if (!isset($_SESSION['admin_id'])) {
 
 <script src="assets/js/main_script.js"></script>
 <script src="assets/js/entry_handler.js"></script>
+<script src="assets/js/setting_handler.js"></script>
 </body>
 </html>
