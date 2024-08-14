@@ -66,7 +66,51 @@ if (!isset($_SESSION['admin_id'])) {
 
         <div class="main-container">
 
-            <section class="home_section section"></section>
+            <section class="home_section section">
+                <div class="home_container">
+                    <div class="home-message-container">
+                        <div class="header_content_hmc">
+                            <img src="assets/images/background_nu.png" alt="Update Notification">
+                            <div class="profile_logo">
+                                <img src="assets/images/clogo.png" alt="Happy Cloud Shield">
+                            </div>
+                            <div class="up-details">
+                                <span>New Update V1.0.0</span>
+                                <span>8/14/2024</span>
+                            </div>
+                        </div>
+                        <div class="up-content">
+                            <a href="https://github.com/World-Rage-company/happy-cloud-shield" class="up-message-more-details" target="_blank">
+                                Learn more about the update...
+                            </a>
+                        </div>
+                    </div>
+                    <div class="welcome_box">
+                        <div class="content_wel_box">
+                            <div class="profile_wel">
+                                <img src="assets/images/clogo.png" alt="Happy Cloud Shield">
+                            </div>
+                            <p>Welcome to Happy Cloud Shield v1.0.0</p>
+                        </div>
+                    </div>
+                    <div class="header_content">
+                        <div class="header_options_one_hh">
+                            <div class="page-name">
+                                <!--<span>Your assets</span>-->
+                                <span>Coming Soon...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home-content">
+                        <div class="options_box_hd">
+                            <div class="header_box">
+                                <div class="profile_box"></div>
+                            </div>
+                            <div class="content_box"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <section class="block_list_section section">
                 <div class="block_list_container">
@@ -238,5 +282,6 @@ if (!isset($_SESSION['admin_id'])) {
 <script src="assets/js/main_script.js"></script>
 <script src="assets/js/entry_handler.js"></script>
 <script src="assets/js/setting_handler.js"></script>
+<script src="assets/js/updateChecker.js"></script>
 </body>
 </html>
