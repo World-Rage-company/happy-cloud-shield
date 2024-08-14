@@ -19,7 +19,7 @@ if ($entryId <= 0) {
 try {
     $conn = getDbConnection();
 
-    $sql = "SELECT title, address, description FROM blocked_entries WHERE id = :id";
+    $sql = "SELECT id, title, address, description FROM blocked_entries WHERE id = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $entryId, PDO::PARAM_INT);
     $stmt->execute();
