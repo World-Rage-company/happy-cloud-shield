@@ -8,21 +8,21 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 check_os_version() {
-  if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS=$NAME
-    VERSION=$(echo $VERSION_ID | awk -F. '{ printf("%d%02d", $1,$2); }')
-    MIN_VERSION=2004
-    if [[ "$OS" == "Ubuntu" && $VERSION -ge $MIN_VERSION ]]; then
-      echo -e "${GREEN}Operating system and Ubuntu version are suitable.${NC}"
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$NAME
+        VERSION=$(echo $VERSION_ID | awk -F. '{ printf("%d%02d", $1,$2); }')
+        MIN_VERSION=2004
+        if [[ "$OS" == "Ubuntu" && $VERSION -ge $MIN_VERSION ]]; then
+            echo -e "${GREEN}Operating system and Ubuntu version are suitable.${NC}"
+        else
+            echo -e "${RED}This script only supports Ubuntu 20.04 and above.${NC}"
+            exit 1
+        fi
     else
-      echo -e "${RED}This script only supports Ubuntu 20.04 and above.${NC}"
-      exit 1
+        echo -e "${RED}Cannot detect the operating system.${NC}"
+        exit 1
     fi
-  else
-    echo -e "${RED}Cannot detect the operating system.${NC}"
-    exit 1
-  fi
 }
 
 check_root() {
@@ -87,66 +87,31 @@ add_nginx_config() {
         port=$(( ( RANDOM % 1000 )  + 9000 ))
     fi
 
-    read -p "Do you want to use SSL for this server? (y/n): " use_ssl
-    if [[ "$use_ssl" =~ ^[Yy]$ ]]; then
-        read -p "Enter your domain name (e.g., example.com): " domain
-        certbot --nginx -d "$domain" -d "www.$domain"
-        nginx_config="
-        server {
-            listen $port ssl;
-            server_name $domain www.$domain;
-            root /var/www/html/happy-cloud-shield;
-            index index.php index.html;
+    domain=$(hostname -I | awk '{print $1}')
 
-            ssl_certificate /etc/letsencrypt/live/$domain/fullchain.pem;
-            ssl_certificate_key /etc/letsencrypt/live/$domain/privkey.pem;
+    echo -e "${YELLOW}No SSL configuration found. Using IP address as server name.${NC}"
+    nginx_config="
+    server {
+        listen $port;
+        server_name $domain;
+        root /var/www/html/happy-cloud-shield;
+        index index.php index.html;
 
-            location / {
-                try_files \$uri \$uri/ /index.php?\$query_string;
-            }
-
-            location ~ \.php$ {
-                include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
-                fastcgi_param PHP_VALUE \"memory_limit=4096M\";
-            }
-
-            location ~ /\.ht {
-                deny all;
-            }
+        location / {
+            try_files \$uri \$uri/ /index.php?\$query_string;
         }
-        "
-    else
-        if hostname -I > /dev/null 2>&1; then
-            server_ip=$(hostname -I | awk '{print $1}')
-            domain=$server_ip
-        else
-            domain=$(hostname)
-        fi
-        echo -e "${YELLOW}No SSL configuration found. Using IP address as server name.${NC}"
-        nginx_config="
-        server {
-            listen $port;
-            server_name $domain;
-            root /var/www/html/happy-cloud-shield;
-            index index.php index.html;
 
-            location / {
-                try_files \$uri \$uri/ /index.php?\$query_string;
-            }
-
-            location ~ \.php$ {
-                include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
-                fastcgi_param PHP_VALUE \"memory_limit=4096M\";
-            }
-
-            location ~ /\.ht {
-                deny all;
-            }
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+            fastcgi_param PHP_VALUE \"memory_limit=4096M\";
         }
-        "
-    fi
+
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+    "
 
     echo "$nginx_config" | tee /etc/nginx/sites-available/happy-cloud-shield > /dev/null
     ln -s /etc/nginx/sites-available/happy-cloud-shield /etc/nginx/sites-enabled/
@@ -199,7 +164,9 @@ CREATE TABLE IF NOT EXISTS blocked_entries (
 );
 EOF
 
-    sed -i "s/DB_USER', ''/DB_USER', '$mysql_user'/; s/DB_PASS', ''/DB_PASS', '$mysql_pass'/" /var/www/html/happy-cloud-shield/assets/php/database/config.php
+    if [ -f "/var/www/html/happy-cloud-shield/assets/php/database/config.php" ]; then
+        sed -i "s/DB_USER', ''/DB_USER', '$mysql_user'/; s/DB_PASS', ''/DB_PASS', '$mysql_pass'/" /var/www/html/happy-cloud-shield/assets/php/database/config.php
+    fi
 
     if [ $(admin_exists "admin") -eq 0 ]; then
         echo -e "${YELLOW}Admin user does not exist. Creating new admin user...${NC}"
