@@ -4,3 +4,7 @@
 </picture>
 </p>
 <h1 align="center"/>happy cloud shield</h1>
+
+```
+bash <(curl -Ls https://raw.githubusercontent.com/World-Rage-company/happy-cloud-shield/master/install.sh --ipv4)
+```
