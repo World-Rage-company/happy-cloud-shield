@@ -11,8 +11,9 @@ check_os_version() {
   if [ -f /etc/os-release ]; then
     . /etc/os-release
     OS=$NAME
-    VERSION=$VERSION_ID
-    if [[ "$OS" == "Ubuntu" && $(echo "$VERSION >= 20.04" | bc -l) -eq 1 ]]; then
+    VERSION=$(echo $VERSION_ID | awk -F. '{ printf("%d%02d", $1,$2); }')
+    MIN_VERSION=2004
+    if [[ "$OS" == "Ubuntu" && $VERSION -ge $MIN_VERSION ]]; then
       echo -e "${GREEN}Operating system and Ubuntu version are suitable.${NC}"
     else
       echo -e "${RED}This script only supports Ubuntu 20.04 and above.${NC}"
