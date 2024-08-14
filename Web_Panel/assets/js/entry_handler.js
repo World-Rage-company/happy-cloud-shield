@@ -46,6 +46,55 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+    document.getElementById('btn_e_save').addEventListener('click', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const entryId = urlParams.get('entryId');
+
+        const address = document.getElementById('edit-address-input').value.trim();
+        const title = document.getElementById('edit-title-input').value.trim();
+        const description = document.getElementById('edit-description-input').value.trim();
+
+        if (!address || !title) {
+            showMessage('error', 'Please fill in all required fields.');
+            setTimeout(hideMessages, 3000);
+            return;
+        }
+
+        const data = new URLSearchParams();
+        data.append('entry_id', entryId);
+        data.append('address', address);
+        data.append('title', title);
+        data.append('description', description);
+
+        fetch('assets/php/edit_block_handler.php', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    showMessage('success', result.message);
+                    setTimeout(() => {
+                        const url = new URL(window.location.href);
+                        url.searchParams.delete('showBlockEntry');
+                        url.searchParams.delete('entryId');
+                        history.pushState(null, '', url.href);
+                        location.reload();
+                    }, 2000);
+                } else {
+                    showMessage('error', result.message);
+                    setTimeout(hideMessages, 3000);
+                }
+            })
+            .catch(error => {
+                showMessage('error', 'An error occurred: ' + error.message);
+                setTimeout(hideMessages, 3000);
+            });
+    });
+
     document.querySelectorAll('#btn_delete').forEach(button => {
         button.addEventListener('click', function() {
             const entryId = this.getAttribute('data-entry');
