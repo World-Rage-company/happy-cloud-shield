@@ -333,15 +333,15 @@ body {
 
 .up-details {
     position: absolute;
-    left: 10px;
+    left: 80px;
     bottom: 10px;
-    width: 100%;
+    width: calc(100% - 90px);
     height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 70px;
-    color: #fff;
+    color: var(--text-color);
+    box-sizing: border-box;
 }
 
 .up-details span {
