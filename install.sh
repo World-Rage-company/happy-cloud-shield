@@ -7,12 +7,21 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-check_os() {
-    os_version=$(lsb_release -r | awk '{print $2}')
-    if [[ "$os_version" < "20.04" ]]; then
-        echo -e "${RED}This script is designed to run on Ubuntu 20.04 or newer.${NC}"
-        exit 1
+check_os_version() {
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$NAME
+    VERSION=$VERSION_ID
+    if [[ "$OS" == "Ubuntu" && $(echo "$VERSION >= 20.04" | bc -l) -eq 1 ]]; then
+      echo -e "${GREEN}Operating system and Ubuntu version are suitable.${NC}"
+    else
+      echo -e "${RED}This script only supports Ubuntu 20.04 and above.${NC}"
+      exit 1
     fi
+  else
+    echo -e "${RED}Cannot detect the operating system.${NC}"
+    exit 1
+  fi
 }
 
 check_root() {
@@ -192,7 +201,7 @@ finish() {
     echo -e "Dashboard Link: http://$(hostname -I | awk '{print $1}'):$(grep -oP 'listen \K\d+' /etc/nginx/sites-available/happy-cloud-shield)"
 }
 
-check_os
+check_os_version
 check_root
 setup_nginx
 setup_mysql
