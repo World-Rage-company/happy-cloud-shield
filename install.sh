@@ -41,13 +41,18 @@ setup_nginx() {
 
     if [ -d "/var/www/html/happy-cloud-shield" ]; then
         echo -e "${YELLOW}Directory /var/www/html/happy-cloud-shield already exists. Cleaning up...${NC}"
-        rm -rf /var/www/html/happy-cloud-shield
+        rm -rf /var/www/html/happy-cloud-shield/*
+    else
+        mkdir -p /var/www/html/happy-cloud-shield
     fi
 
-    mkdir -p /var/www/html/happy-cloud-shield
-
     echo -e "${YELLOW}Cloning repository...${NC}"
-    git clone https://github.com/World-Rage-company/happy-cloud-shield /var/www/html/happy-cloud-shield
+    git clone https://github.com/World-Rage-company/happy-cloud-shield /tmp/happy-cloud-shield
+
+    echo -e "${YELLOW}Copying Web_Panel contents...${NC}"
+    cp -r /tmp/happy-cloud-shield/Web_Panel/* /var/www/html/happy-cloud-shield/
+
+    rm -rf /tmp/happy-cloud-shield
 
     add_nginx_config
 }
