@@ -201,9 +201,7 @@ EOF
 
     sed -i "s/DB_USER', ''/DB_USER', '$mysql_user'/; s/DB_PASS', ''/DB_PASS', '$mysql_pass'/" /var/www/html/happy-cloud-shield/assets/php/database/config.php
 
-    user_exists=$(mysql -u "$mysql_user" -p"$mysql_pass" HCS_db -se "SELECT COUNT(*) FROM admins WHERE username='admin';")
-
-    if [ "$user_exists" -eq 0 ]; then
+    if [ $(admin_exists "admin") -eq 0 ]; then
         echo -e "${YELLOW}Admin user does not exist. Creating new admin user...${NC}"
         mysql -u "$mysql_user" -p"$mysql_pass" HCS_db <<EOF
 INSERT INTO admins (username, password) VALUES ('admin', '$2a$12$OpVPiKsWXY4P3M0RSCOkiuBxOyCG2WIcXljN3J6aF3jKGE5N7oOBC');
