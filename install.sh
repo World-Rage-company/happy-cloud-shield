@@ -64,6 +64,12 @@ add_nginx_config() {
     local port
 
     echo -e "${YELLOW}Setting up Nginx configuration...${NC}"
+
+    if [ -L /etc/nginx/sites-enabled/happy-cloud-shield ]; then
+        echo -e "${YELLOW}Existing Nginx configuration found. Removing it...${NC}"
+        rm /etc/nginx/sites-enabled/happy-cloud-shield
+    fi
+
     if [ -d "/var/www/html/happy-cloud-shield" ]; then
         server_block=$(awk -v RS="" "/root \/var\/www\/html\/happy-cloud-shield;/ {print; exit}" "$default_nginx_config")
         if [ -n "$server_block" ]; then
