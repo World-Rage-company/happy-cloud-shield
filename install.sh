@@ -203,4 +203,5 @@ check_os_version
 check_root
 setup_nginx
 setup_mysql
+setup_manage_blocks
 finish
