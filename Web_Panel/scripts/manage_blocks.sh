@@ -13,16 +13,18 @@ mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT address FROM blocke
 
 block_ip() {
     local ip="$1"
-    if ! sudo iptables -L INPUT -v -n | grep -q "$ip"; then
-        sudo iptables -A INPUT -s "$ip" -j DROP
+    if ! sudo ufw status | grep -q "$ip"; then
+        sudo ufw deny from "$ip"
         echo "Blocked $ip"
+    else
+        echo "IP $ip is already blocked"
     fi
 }
 
 unblock_ip() {
     local ip="$1"
-    if sudo iptables -L INPUT -v -n | grep -q "$ip"; then
-        sudo iptables -D INPUT -s "$ip" -j DROP
+    if sudo ufw status | grep -q "$ip"; then
+        sudo ufw delete deny from "$ip"
         echo "Unblocked $ip"
     else
         echo "IP $ip is not blocked"
@@ -40,7 +42,7 @@ while IFS= read -r address; do
     fi
 done < "$TEMP_BLOCKED_LIST_FILE"
 
-BLOCKED_IPS=$(sudo iptables -L INPUT -v -n | grep DROP | awk '{print $4}')
+BLOCKED_IPS=$(sudo ufw status | grep 'DENY' | awk '{print $3}')
 
 for ip in $BLOCKED_IPS; do
     if ! grep -q "$ip" "$TEMP_BLOCKED_LIST_FILE"; then
