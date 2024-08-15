@@ -168,7 +168,12 @@ EOF
         sed -i "s/DB_USER', ''/DB_USER', '$mysql_user'/; s/DB_PASS', ''/DB_PASS', '$mysql_pass'/" /var/www/html/happy-cloud-shield/assets/php/database/config.php
     fi
 
-    if [ $(admin_exists "admin") -eq 0 ]; then
+    admin_exists() {
+        result=$(mysql -u "$mysql_user" -p"$mysql_pass" -D HCS_db -se "SELECT COUNT(*) FROM admins WHERE username='admin';")
+        echo $result
+    }
+
+    if [ $(admin_exists) -eq 0 ]; then
         echo -e "${YELLOW}Admin user does not exist. Creating new admin user...${NC}"
         mysql -u "$mysql_user" -p"$mysql_pass" HCS_db <<EOF
 INSERT INTO admins (username, password, role) VALUES ('admin', '$2a$12$OpVPiKsWXY4P3M0RSCOkiuBxOyCG2WIcXljN3J6aF3jKGE5N7oOBC', 'superadmin');
@@ -201,11 +206,12 @@ check_ufw() {
 
     echo -e "${YELLOW}Checking UFW status...${NC}"
     ufw_status=$(ufw status | grep -o 'Status: active')
+    echo -e "${YELLOW}UFW status output: $ufw_status${NC}"  # افزودن اشکال‌زدایی
 
     if [ -z "$ufw_status" ]; then
         echo -e "${YELLOW}UFW is not active. Enabling UFW...${NC}"
         ufw allow 'Nginx Full'
-        ufw enable
+        ufw --force enable
     else
         echo -e "${GREEN}UFW is already active.${NC}"
     fi
