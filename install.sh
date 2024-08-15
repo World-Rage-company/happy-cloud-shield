@@ -206,12 +206,13 @@ check_ufw() {
 
     echo -e "${YELLOW}Checking UFW status...${NC}"
     ufw_status=$(ufw status | grep -o 'Status: active')
-    echo -e "${YELLOW}UFW status output: $ufw_status${NC}"  # افزودن اشکال‌زدایی
+
+    echo -e "${YELLOW}UFW status output: $ufw_status${NC}"
 
     if [ -z "$ufw_status" ]; then
         echo -e "${YELLOW}UFW is not active. Enabling UFW...${NC}"
         ufw allow 'Nginx Full'
-        ufw --force enable
+        ufw enable
     else
         echo -e "${GREEN}UFW is already active.${NC}"
     fi
