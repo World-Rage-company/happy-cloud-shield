@@ -1,32 +1,51 @@
 #!/bin/bash
 
-CONFIG_FILE="../assets/php/database/config.php"
-BLOCKED_FILE="data/blocked_addresses.txt"
-LOG_FILE="data/blocked_log.txt"
+CONFIG_FILE="/var/www/html/happy-cloud-shield/assets/php/database/config.php"
 
 DB_HOST=$(grep "define('DB_HOST'" $CONFIG_FILE | cut -d"'" -f4)
 DB_USER=$(grep "define('DB_USER'" $CONFIG_FILE | cut -d"'" -f4)
 DB_PASS=$(grep "define('DB_PASS'" $CONFIG_FILE | cut -d"'" -f4)
 DB_NAME=$(grep "define('DB_NAME'" $CONFIG_FILE | cut -d"'" -f4)
 
-mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT address FROM blocked_entries" -B -N > $BLOCKED_FILE
+TEMP_BLOCKED_LIST_FILE=$(mktemp)
 
-if [ -f "$BLOCKED_FILE" ]; then
-    while IFS= read -r address
-    do
-        if ! grep -q "$address" "$LOG_FILE"; then
-            sudo iptables -A INPUT -s "$address" -j DROP
-            echo "Blocked $address"
-            echo "$address" >> $LOG_FILE
-        fi
-    done < "$BLOCKED_FILE"
-fi
+mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT address FROM blocked_entries" -B -N | sort -u > $TEMP_BLOCKED_LIST_FILE
 
-while IFS= read -r address
-do
-    if ! grep -q "$address" "$BLOCKED_FILE"; then
-        sudo iptables -D INPUT -s "$address" -j DROP
-        echo "Unblocked $address"
-        sed -i "/$address/d" $LOG_FILE
+block_ip() {
+    local ip="$1"
+    if ! sudo iptables -L INPUT -v -n | grep -q "$ip"; then
+        sudo iptables -A INPUT -s "$ip" -j DROP
+        echo "Blocked $ip"
     fi
-done < "$LOG_FILE"
+}
+
+unblock_ip() {
+    local ip="$1"
+    if sudo iptables -L INPUT -v -n | grep -q "$ip"; then
+        sudo iptables -D INPUT -s "$ip" -j DROP
+        echo "Unblocked $ip"
+    else
+        echo "IP $ip is not blocked"
+    fi
+}
+
+while IFS= read -r address; do
+    if [[ "$address" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        block_ip "$address"
+    else
+        ip_addresses=$(dig +short "$address")
+        for ip in $ip_addresses; do
+            block_ip "$ip"
+        done
+    fi
+done < "$TEMP_BLOCKED_LIST_FILE"
+
+BLOCKED_IPS=$(sudo iptables -L INPUT -v -n | grep DROP | awk '{print $4}')
+
+for ip in $BLOCKED_IPS; do
+    if ! grep -q "$ip" "$TEMP_BLOCKED_LIST_FILE"; then
+        unblock_ip "$ip"
+    fi
+done
+
+rm "$TEMP_BLOCKED_LIST_FILE"
