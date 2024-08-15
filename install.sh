@@ -171,7 +171,7 @@ EOF
     if [ $(admin_exists "admin") -eq 0 ]; then
         echo -e "${YELLOW}Admin user does not exist. Creating new admin user...${NC}"
         mysql -u "$mysql_user" -p"$mysql_pass" HCS_db <<EOF
-INSERT INTO admins (username, password) VALUES ('admin', '$2a$12$OpVPiKsWXY4P3M0RSCOkiuBxOyCG2WIcXljN3J6aF3jKGE5N7oOBC');
+INSERT INTO admins (username, password, role) VALUES ('admin', '$2a$12$OpVPiKsWXY4P3M0RSCOkiuBxOyCG2WIcXljN3J6aF3jKGE5N7oOBC', 'superadmin');
 EOF
     else
         echo -e "${GREEN}Admin user already exists. Skipping creation.${NC}"
