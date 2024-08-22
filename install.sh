@@ -197,27 +197,6 @@ setup_manage_blocks() {
     echo -e "${GREEN}Cron job set up to run manage_blocks.sh every 5 seconds.${NC}"
 }
 
-check_ufw() {
-    if ! command -v ufw &> /dev/null; then
-        echo -e "${YELLOW}UFW not found. Installing UFW...${NC}"
-        apt update
-        apt install -y ufw
-    fi
-
-    echo -e "${YELLOW}Checking UFW status...${NC}"
-    ufw_status=$(ufw status | grep -o 'Status: active')
-
-    echo -e "${YELLOW}UFW status output: $ufw_status${NC}"
-
-    if [ -z "$ufw_status" ]; then
-        echo -e "${YELLOW}UFW is not active. Enabling UFW...${NC}"
-        ufw allow 'Nginx Full'
-        ufw enable
-    else
-        echo -e "${GREEN}UFW is already active.${NC}"
-    fi
-}
-
 finish() {
     echo -e "************ Happy Cloud Shield ************"
     echo -e "Username: admin"
@@ -230,5 +209,4 @@ check_root
 setup_nginx
 setup_mysql
 setup_manage_blocks
-check_ufw
 finish
