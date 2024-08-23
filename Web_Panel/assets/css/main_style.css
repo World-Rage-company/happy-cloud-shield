@@ -17,7 +17,6 @@ meta[name="viewport"] {
 }
 
 :root {
-    /* ===== Colors ===== */
     --background-color: #181818;
     --primary-color: #3a31d8;
     --secondary-color: #020024;
@@ -25,8 +24,8 @@ meta[name="viewport"] {
     --text-color: #ebe9fc;
     --text-label-color: #6c7073;
 
-    --background-nav-color: rgba(24,24,24,0.5);
-    --border-nav-color: 1px solid rgba(24,24,24,0.25);
+    --background-nav-color: rgba(24, 24, 24, 0.5);
+    --border-nav-color: 1px solid rgba(24, 24, 24, 0.25);
 
     --widget-color: #252525;
     --hover-widget-color: #333333;
@@ -34,7 +33,6 @@ meta[name="viewport"] {
     --widget-sblc-one-color: #141414;
     --widget-sblc-two-color: #212121;
 
-    /* ====== Transition ====== */
     --tran-01: all 0.3s ease;
 }
 
