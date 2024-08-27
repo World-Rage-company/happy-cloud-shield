@@ -985,6 +985,7 @@ body {
     width: 100%;
     height: auto;
     padding: 10px;
+    user-select: none;
 }
 
 .options_bottom_content {
@@ -994,6 +995,7 @@ body {
     margin-top: auto;
     padding: 10px;
     gap: 10px;
+    user-select: none;
 }
 
 .input-field-setting-up {
