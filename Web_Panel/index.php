@@ -97,7 +97,7 @@ if (!isset($_SESSION['admin_id'])) {
                         <div class="header_options_one_hh">
                             <div class="page-name">
                                 <!--<span>Your assets</span>-->
-                                <span>Coming Soon...</span>
+                                <span>Home options coming soon...</span>
                             </div>
                         </div>
                     </div>
