@@ -89,7 +89,8 @@ add_nginx_config() {
 
     domain=$(hostname -I | awk '{print $1}')
 
-    echo -e "${YELLOW}No SSL configuration found. Using IP address as server name.${NC}"
+    PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;")
+
     nginx_config="
     server {
         listen $port;
@@ -103,7 +104,7 @@ add_nginx_config() {
 
         location ~ \.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php${PHP_VERSION}-fpm.sock;
             fastcgi_param PHP_VALUE \"memory_limit=4096M\";
         }
 
