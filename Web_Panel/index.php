@@ -222,7 +222,7 @@ if (!isset($_SESSION['admin_id'])) {
         <div class="form-content">
             <div class="form-label">Enter Website URL <span class="required">*</span></div>
             <div class="form-input">
-                <input type="url" class="input-field" id="address-input" placeholder="e.g.: https://example.com">
+                <input type="url" class="input-field" id="address-input" placeholder="e.g.: example.com or 192.168.1.1">
             </div>
             <div class="form-label">Enter Title <span class="required">*</span></div>
             <div class="form-input">
