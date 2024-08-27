@@ -186,16 +186,11 @@ EOF
 
 setup_manage_blocks() {
     local script_path="/var/www/html/happy-cloud-shield/scripts/manage_blocks.sh"
-    local cron_job="*/1 * * * * /bin/bash $script_path >> /var/log/manage_blocks.log 2>&1"
 
     echo -e "${YELLOW}Setting up manage_blocks.sh...${NC}"
+    chmod +x "$script_path"
 
-    crontab -l | grep -v "$script_path" | crontab -
-
-    echo "* * * * * /bin/bash $script_path >> /var/log/manage_blocks.log 2>&1" | crontab -
-    echo "*/5 * * * * /bin/bash $script_path >> /var/log/manage_blocks.log 2>&1" | crontab -
-
-    echo -e "${GREEN}Cron job set up to run manage_blocks.sh every 5 seconds.${NC}"
+    echo -e "${GREEN}Script manage_blocks.sh is now ready to be executed.${NC}"
 }
 
 finish() {
