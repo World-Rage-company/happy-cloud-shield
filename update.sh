@@ -76,8 +76,28 @@ configure_database() {
     fi
 }
 
+setup_cron_job() {
+    local python_script="/var/www/html/happy-cloud-shield/scripts/manage_blocks.py"
+    local venv_dir="/var/www/html/happy-cloud-shield/venv"
+    local log_file="/var/log/manage_blocks.log"
+    local cron_job="*/5 * * * * source $venv_dir/bin/activate && python $python_script >> $log_file 2>&1"
+    local cron_file="/tmp/crontab.new"
+
+    echo -e "${YELLOW}Setting up cron job for manage_blocks.py...${NC}"
+
+    if crontab -l 2>/dev/null | grep -q "$python_script"; then
+        echo -e "${GREEN}Cron job for manage_blocks.py already exists.${NC}"
+    else
+        (crontab -l 2>/dev/null; echo "$cron_job") > "$cron_file"
+        crontab "$cron_file"
+        rm "$cron_file"
+        echo -e "${GREEN}Cron job added successfully.${NC}"
+    fi
+}
+
 check_os_version
 check_root
 check_installed
 update_application
 configure_database
+setup_cron_job
