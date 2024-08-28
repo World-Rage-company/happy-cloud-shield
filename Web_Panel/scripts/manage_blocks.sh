@@ -19,6 +19,8 @@ block_ip() {
     local ip="$1"
     if ! sudo iptables -L INPUT -v -n | awk '/DROP/ {print $8}' | grep -q "$ip"; then
         sudo iptables -A INPUT -s "$ip" -j DROP
+        sudo iptables -A FORWARD -s "$ip" -j DROP
+        sudo iptables -A OUTPUT -d "$ip" -j DROP
         echo "Blocked $ip"
     else
         echo "IP $ip is already blocked"
@@ -29,6 +31,8 @@ unblock_ip() {
     local ip="$1"
     if sudo iptables -L INPUT -v -n | awk '/DROP/ {print $8}' | grep -q "$ip"; then
         sudo iptables -D INPUT -s "$ip" -j DROP
+        sudo iptables -D FORWARD -s "$ip" -j DROP
+        sudo iptables -D OUTPUT -d "$ip" -j DROP
         echo "Unblocked $ip"
     else
         echo "IP $ip is not blocked"
