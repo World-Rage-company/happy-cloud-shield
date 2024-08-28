@@ -171,19 +171,64 @@ EOF
 }
 
 setup_manage_blocks() {
-    local script_path="/var/www/html/happy-cloud-shield/scripts/manage_blocks.sh"
+    local python_script="/var/www/html/happy-cloud-shield/scripts/manage_blocks.py"
+    local venv_dir="/var/www/html/happy-cloud-shield/venv"
+    local log_file="/var/log/manage_blocks.log"
 
-    echo -e "${YELLOW}Setting up manage_blocks.sh...${NC}"
-    chmod +x "$script_path"
+    echo -e "${YELLOW}Setting up Python environment and manage_blocks.py...${NC}"
 
-    echo -e "${GREEN}Script manage_blocks.sh is now ready to be executed.${NC}"
+    if ! command -v python3 &> /dev/null; then
+        echo -e "${RED}Python3 is not installed. Installing Python3...${NC}"
+        apt update
+        apt install -y python3 python3-venv python3-pip
+    fi
+
+    if [ ! -d "$venv_dir" ]; then
+        echo -e "${YELLOW}Creating Python virtual environment...${NC}"
+        python3 -m venv "$venv_dir"
+    fi
+
+    source "$venv_dir/bin/activate"
+
+    if ! python -c "import mysql.connector" &> /dev/null; then
+        echo -e "${YELLOW}mysql-connector-python not found. Installing...${NC}"
+        pip install mysql-connector-python
+    fi
+
+    deactivate
+
+    if [ ! -d "/var/log" ]; then
+        echo -e "${YELLOW}/var/log directory does not exist. Creating...${NC}"
+        mkdir -p /var/log
+    fi
+
+    touch "$log_file"
+    chmod 666 "$log_file"
+
+    cron_job="*/5 * * * * source $venv_dir/bin/activate && python $python_script >> $log_file 2>&1"
+    (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
+
+    echo -e "${GREEN}Python environment is set up, and cron job is created to run the Python script every 5 minutes.${NC}"
 }
 
 finish() {
+    local nginx_config_file="/etc/nginx/sites-available/default"
+    local port
+    local dashboard_link
+
     echo -e "************ Happy Cloud Shield ************"
     echo -e "Username: admin"
     echo -e "Password: admin"
-    echo -e "Dashboard Link: http://$(hostname -I | awk '{print $1}'):$(grep -oP 'listen \K\d+' /etc/nginx/sites-available/default)"
+
+    port=$(grep -A 10 "root /var/www/html/happy-cloud-shield;" "$nginx_config_file" | grep "listen" | awk '{print $2}')
+    if [ -z "$port" ]; then
+        echo -e "${RED}No port found for Happy Cloud Shield in Nginx configuration.${NC}"
+        exit 1
+    fi
+
+    dashboard_link="http://$(hostname -I | awk '{print $1}'):${port}"
+
+    echo -e "Dashboard Link: ${dashboard_link}"
 }
 
 check_os_version
