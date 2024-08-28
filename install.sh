@@ -220,7 +220,11 @@ finish() {
     echo -e "Username: admin"
     echo -e "Password: admin"
 
-    port=$(grep -A 10 "root /var/www/html/happy-cloud-shield;" "$nginx_config_file" | grep "listen" | awk '{print $2}')
+    port=$(awk -v path="/var/www/html/happy-cloud-shield" '
+        $0 ~ "root " path ";" {found=1}
+        found && $0 ~ /^ *listen/ {print $2; exit}
+    ' "$nginx_config_file")
+
     if [ -z "$port" ]; then
         echo -e "${RED}No port found for Happy Cloud Shield in Nginx configuration.${NC}"
         exit 1
