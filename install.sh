@@ -60,7 +60,6 @@ setup_nginx() {
 add_nginx_config() {
     local default_nginx_config="/etc/nginx/sites-available/default"
     local server_block
-    local existing_port
     local port
 
     echo -e "${YELLOW}Setting up Nginx configuration...${NC}"
@@ -77,7 +76,7 @@ add_nginx_config() {
 
     domain=$(hostname -I | awk '{print $1}')
 
-    PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;")
+    PHP_VERSION="8.1"
 
     nginx_config="
     server {
