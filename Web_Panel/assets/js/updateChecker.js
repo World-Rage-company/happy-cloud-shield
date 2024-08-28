@@ -1,4 +1,4 @@
-const currentVersion = "1.0.0";
+const currentVersion = "1.1.0";
 const repoUrl = "https://api.github.com/repos/World-Rage-company/happy-cloud-shield/releases/latest";
 
 async function checkForUpdates() {
