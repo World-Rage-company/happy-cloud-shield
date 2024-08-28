@@ -57,7 +57,27 @@ update_application() {
     echo -e "${GREEN}Update completed successfully.${NC}"
 }
 
+configure_database() {
+    echo -e "${YELLOW}Configuring database connection...${NC}"
+
+    read -p "Enter MySQL username: " mysql_user
+    read -sp "Enter MySQL password: " mysql_pass
+    echo
+
+    config_file="/var/www/html/happy-cloud-shield/assets/php/database/config.php"
+
+    if [ -f "$config_file" ]; then
+        echo -e "${YELLOW}Updating $config_file with provided credentials...${NC}"
+        sed -i "s/DB_USER', ''/DB_USER', '$mysql_user'/; s/DB_PASS', ''/DB_PASS', '$mysql_pass'/" "$config_file"
+        echo -e "${GREEN}Configuration updated successfully.${NC}"
+    else
+        echo -e "${RED}$config_file not found. Exiting...${NC}"
+        exit 1
+    fi
+}
+
 check_os_version
 check_root
 check_installed
 update_application
+configure_database
