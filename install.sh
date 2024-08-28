@@ -32,6 +32,21 @@ check_root() {
     fi
 }
 
+check_installed() {
+    if [ -d "/var/www/html/happy-cloud-shield" ]; then
+        echo -e "${YELLOW}happy-cloud-shield is already installed.${NC}"
+        read -p "Do you want to update it instead? (yes/no): " response
+        if [[ "$response" == "yes" ]]; then
+            echo -e "${YELLOW}Starting update process...${NC}"
+            bash <(curl -Ls https://raw.githubusercontent.com/World-Rage-company/happy-cloud-shield/master/update.sh --ipv4)
+            exit 0
+        else
+            echo -e "${RED}Exiting installation script.${NC}"
+            exit 1
+        fi
+    fi
+}
+
 setup_nginx() {
     if ! command -v nginx &> /dev/null; then
         echo -e "${YELLOW}Nginx not found. Installing Nginx...${NC}"
@@ -237,6 +252,7 @@ finish() {
 
 check_os_version
 check_root
+check_installed
 setup_nginx
 setup_mysql
 setup_manage_blocks
