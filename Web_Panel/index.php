@@ -90,7 +90,7 @@ if (!isset($_SESSION['admin_id'])) {
                             <div class="profile_wel">
                                 <img src="assets/images/clogo.png" alt="Happy Cloud Shield">
                             </div>
-                            <p>Welcome to Happy Cloud Shield v1.0.0</p>
+                            <p>Welcome to Happy Cloud Shield v1.1.0</p>
                         </div>
                     </div>
                     <div class="header_content">
