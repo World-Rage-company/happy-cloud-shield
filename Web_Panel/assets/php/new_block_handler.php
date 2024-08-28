@@ -25,7 +25,7 @@ try {
     $result = $stmt->execute([$title, $description, $address, $createdBy]);
 
     if ($result) {
-        // exec("/bin/bash /var/www/html/happy-cloud-shield/scripts/manage_blocks.sh > /dev/null 2>/dev/null &");
+        exec("/bin/bash /var/www/html/happy-cloud-shield/scripts/manage_blocks.sh > /dev/null 2>/dev/null &");
 
         echo json_encode(['success' => true, 'message' => 'Block added successfully.']);
     } else {
