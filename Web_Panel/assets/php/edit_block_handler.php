@@ -27,7 +27,7 @@ if (isset($_POST['entry_id']) && isset($_POST['address']) && isset($_POST['title
         $stmt->bindParam(':id', $entryId, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            // exec("/bin/bash /var/www/html/happy-cloud-shield/scripts/manage_blocks.sh > /dev/null 2>/dev/null &");
+            exec("/bin/bash /var/www/html/happy-cloud-shield/scripts/manage_blocks.sh > /dev/null 2>/dev/null &");
             
             echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
         } else {
