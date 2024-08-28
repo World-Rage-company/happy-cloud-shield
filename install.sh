@@ -183,7 +183,7 @@ finish() {
     echo -e "************ Happy Cloud Shield ************"
     echo -e "Username: admin"
     echo -e "Password: admin"
-    echo -e "Dashboard Link: http://$(hostname -I | awk '{print $1}'):$(grep -oP 'listen \K\d+' /etc/nginx/sites-available/happy-cloud-shield)"
+    echo -e "Dashboard Link: http://$(hostname -I | awk '{print $1}'):$(grep -oP 'listen \K\d+' /etc/nginx/sites-available/default)"
 }
 
 check_os_version
