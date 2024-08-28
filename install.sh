@@ -65,21 +65,9 @@ add_nginx_config() {
 
     echo -e "${YELLOW}Setting up Nginx configuration...${NC}"
 
-    if [ -L /etc/nginx/sites-enabled/happy-cloud-shield ]; then
-        echo -e "${YELLOW}Existing Nginx configuration found. Removing it...${NC}"
-        rm /etc/nginx/sites-enabled/happy-cloud-shield
-    fi
-
-    if [ -d "/var/www/html/happy-cloud-shield" ]; then
-        server_block=$(awk -v RS="" "/root \/var\/www\/html\/happy-cloud-shield;/ {print; exit}" "$default_nginx_config")
-        if [ -n "$server_block" ]; then
-            existing_port=$(echo "$server_block" | grep -oP '(?<=listen )\d+')
-            echo -e "${GREEN}Found existing server block with port: $existing_port${NC}"
-            port=$existing_port
-            return
-        else
-            echo -e "${RED}No existing server block found for /var/www/html/happy-cloud-shield. Adding new configuration.${NC}"
-        fi
+    if grep -q "root /var/www/html/happy-cloud-shield;" "$default_nginx_config"; then
+        echo -e "${GREEN}Nginx configuration for happy-cloud-shield already exists. Skipping...${NC}"
+        return
     fi
 
     read -p "Enter the port number for the new nginx server (leave blank for random): " port
@@ -114,8 +102,7 @@ add_nginx_config() {
     }
     "
 
-    echo "$nginx_config" | tee /etc/nginx/sites-available/happy-cloud-shield > /dev/null
-    ln -s /etc/nginx/sites-available/happy-cloud-shield /etc/nginx/sites-enabled/
+    echo "$nginx_config" >> "$default_nginx_config"
     systemctl restart nginx
 }
 
