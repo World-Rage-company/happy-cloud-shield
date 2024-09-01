@@ -102,12 +102,7 @@ if (!isset($_SESSION['admin_id'])) {
                         </div>
                     </div>
                     <div class="home-content">
-                        <div class="options_box_hd">
-                            <div class="header_box">
-                                <div class="profile_box"></div>
-                            </div>
-                            <div class="content_box"></div>
-                        </div>
+                        <!-- Home Options -->
                     </div>
                 </div>
             </section>
