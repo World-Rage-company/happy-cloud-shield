@@ -28,6 +28,8 @@ try {
         $stmt->execute();
         $blocked_entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $blocked_count = $stmt->rowCount();
+
     } else {
         header("Location: accounts/login.php");
         exit();
