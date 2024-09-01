@@ -45,12 +45,18 @@ def update_blocks(blocked_ips, current_blocked_ips):
     ips_to_unblock = current_blocked_ips - blocked_ips
 
     for ip in ips_to_block:
-        subprocess.run(['sudo', 'iptables', '-A', 'INPUT', '-s', ip, '-j', 'DROP'])
-        print(f"Blocked {ip}")
+        result = subprocess.run(['sudo', 'iptables', '-A', 'INPUT', '-s', ip, '-j', 'DROP'], capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Blocked {ip}")
+        else:
+            print(f"Failed to block {ip}: {result.stderr}")
 
     for ip in ips_to_unblock:
-        subprocess.run(['sudo', 'iptables', '-D', 'INPUT', '-s', ip, '-j', 'DROP'])
-        print(f"Unblocked {ip}")
+        result = subprocess.run(['sudo', 'iptables', '-D', 'INPUT', '-s', ip, '-j', 'DROP'], capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Unblocked {ip}")
+        else:
+            print(f"Failed to unblock {ip}: {result.stderr}")
 
 def main():
     config = parse_php_config(CONFIG_FILE)
