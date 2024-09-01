@@ -220,7 +220,7 @@ setup_manage_blocks() {
     touch "$log_file"
     chmod 666 "$log_file"
 
-    cron_job="*/5 * * * * source $venv_dir/bin/activate && python $python_script >> $log_file 2>&1"
+    cron_job="*/1 * * * * source $venv_dir/bin/activate && python $python_script >> $log_file 2>&1"
     (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
 
     echo -e "${GREEN}Python environment is set up, and cron job is created to run the Python script every 5 minutes.${NC}"
