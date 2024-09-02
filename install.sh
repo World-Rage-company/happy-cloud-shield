@@ -142,6 +142,12 @@ setup_mysql() {
         echo
     done
 
+    echo -e "${YELLOW}Testing MySQL credentials...${NC}"
+    mysql -u "$mysql_user" -p"$mysql_pass" -e "exit" || {
+        echo -e "${RED}Access denied for MySQL user. Please check your credentials.${NC}"
+        exit 1
+    }
+
     mysql -u "$mysql_user" -p"$mysql_pass" -e "CREATE DATABASE IF NOT EXISTS HCS_db;"
     mysql -u "$mysql_user" -p"$mysql_pass" HCS_db <<EOF
 CREATE TABLE IF NOT EXISTS admins (
