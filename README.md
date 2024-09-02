@@ -49,5 +49,12 @@ bash <(curl -Ls https://raw.githubusercontent.com/World-Rage-company/happy-cloud
 3. Set the server’s IP in your domain or subdomain.<br>
 **SSL is now active on your selected port!**
 
+## Uninstallation
+To remove Happy Cloud Shield, run the following command:
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/World-Rage-company/happy-cloud-shield/master/uninstall.sh --ipv4)
+```
+
 ## Supporting Us
 If you find Happy Cloud Shield useful, consider supporting us! Your support helps us continue to improve and maintain the project.
