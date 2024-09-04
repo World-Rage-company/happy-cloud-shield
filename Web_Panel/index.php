@@ -103,6 +103,7 @@ if (!isset($_SESSION['admin_id'])) {
                     </div>
                     <div class="home-content">
                         <!-- Home Options -->
+                        <div class=""></div>
                     </div>
                 </div>
             </section>
